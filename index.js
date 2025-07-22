@@ -31,7 +31,8 @@ app.use(
 );
 
 // ✅ Limit body size
-app.use(express.json({ limit: "2kb" }));
+// app.use(express.json({ limit: "2kb" }));
+app.use(express.json({ limit: "1mb" }));
 
 // ✅ Rate limit – max 20 reqs per IP per min
 const limiter = rateLimit({

@@ -1,24 +1,31 @@
-# Gemini Chatbot – Backend (Node.js + Express)
+Node.js Express backend that connects the AI chat frontend to **Groq's LLaMA3 API**. Handles prompt requests, CORS validation, rate limiting, and input validations.
 
-This is the Node.js + Express backend server for handling secure requests to the Gemini API. It supports multi-turn memory using `contents[]`, protects against abuse, and returns clean replies.
+---
 
-## 🔐 Key Features
+## 🧠 AI Model Used
 
--   Rate limiting (20 req/min/IP)
--   Body size control (max 2kb)
--   Input validation and sanitization
--   Helmet for secure headers
--   CORS enabled (frontend only)
--   Axios-based Gemini API calls
+-   **Provider**: Groq
+-   **Model**: LLaMA3-70B-8192
+-   **API**: [https://api.groq.com/openai/v1/chat/completions](https://api.groq.com/openai/v1/chat/completions)
 
-## 🧠 Gemini Model
+---
 
-Using: `gemini-1.5-flash` via `v1beta` REST API
+## 📦 Tech Stack
 
-## 🧪 How to Run (Backend)
+-   Node.js
+-   Express.js
+-   dotenv
+-   axios
+-   helmet
+-   cors
+-   express-rate-limit
+
+---
+
+## 🛠️ Local Setup
 
 ```bash
-cd backend
+git clone https://github.com/a2rp/gemini-chat-backend.git
+cd gemini-chat-backend
 npm install
-npm run dev   # or node index.js
 ```
