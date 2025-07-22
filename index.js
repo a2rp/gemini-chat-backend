@@ -12,7 +12,23 @@ const app = express();
 app.use(helmet());
 
 // ✅ CORS – restrict origin (use your domain in prod)
-app.use(cors({ origin: "http://localhost:5173" }));
+// app.use(cors({ origin: "http://localhost:5173" }));
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://gemini-smart-chat.netlify.app",
+];
+
+app.use(
+    cors({
+        origin: function (origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            } else {
+                return callback(new Error("CORS not allowed from this origin"));
+            }
+        },
+    })
+);
 
 // ✅ Limit body size
 app.use(express.json({ limit: "2kb" }));
