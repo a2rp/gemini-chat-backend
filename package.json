@@ -1,17 +1,21 @@
 {
-    "name": "backend",
+    "name": "gemini-chat-backend",
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
         "start:dev": "nodemon index.js"
     },
-    "keywords": [],
+    "keywords": [
+        "chat-api",
+        "express",
+        "groq",
+        "nodejs"
+    ],
     "author": "",
     "license": "ISC",
-    "description": "",
+    "description": "Express API for a Groq-powered chat app",
     "dependencies": {
-        "@google/generative-ai": "^0.24.1",
         "axios": "^1.10.0",
         "cors": "^2.8.5",
         "dotenv": "^17.2.0",

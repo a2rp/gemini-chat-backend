@@ -7,44 +7,36 @@ const rateLimit = require("express-rate-limit");
 const chatRoute = require("./routes/chat.js");
 
 const app = express();
-
-// ✅ Helmet for secure HTTP headers
-app.use(helmet());
-
-// ✅ CORS – restrict origin (use your domain in prod)
-// app.use(cors({ origin: "http://localhost:5173" }));
-const allowedOrigins = [
+const defaultOrigins = [
     "http://localhost:5173",
     "https://gemini-smart-chat.netlify.app",
 ];
+const allowedOrigins = new Set(
+    (process.env.CLIENT_ORIGINS || defaultOrigins.join(","))
+        .split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+);
 
+app.use(helmet());
 app.use(
     cors({
-        origin: function (origin, callback) {
-            if (!origin || allowedOrigins.includes(origin)) {
-                return callback(null, true);
-            } else {
-                return callback(new Error("CORS not allowed from this origin"));
-            }
+        origin: (origin, callback) => {
+            callback(null, !origin || allowedOrigins.has(origin));
         },
     })
 );
-
-// ✅ Limit body size
-// app.use(express.json({ limit: "2kb" }));
 app.use(express.json({ limit: "1mb" }));
 
-// ✅ Rate limit – max 20 reqs per IP per min
-const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 10,
-    message: "Too many requests, please try again later.",
+const chatLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 10,
+    standardHeaders: "draft-8",
+    legacyHeaders: false,
+    message: { error: "Too many requests. Please try again in a minute." },
 });
-app.use("/api/chat", limiter);
 
-// ✅ Main chat route
-app.use("/api/chat", chatRoute);
+app.use("/api/chat", chatLimiter, chatRoute);
 
-// ✅ Start server
-const PORT = process.env.PORT || 1190;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const port = Number(process.env.PORT) || 1198;
+app.listen(port, () => console.log(`Chat API listening on port ${port}`));
