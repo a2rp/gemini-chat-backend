@@ -9,6 +9,7 @@ const chatRoute = require("./routes/chat.js");
 const app = express();
 const defaultOrigins = [
     "http://localhost:5173",
+    "https://a2rp.github.io",
     "https://gemini-smart-chat.netlify.app",
 ];
 const allowedOrigins = new Set(

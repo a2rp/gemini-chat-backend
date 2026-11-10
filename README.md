@@ -19,7 +19,7 @@ npm run start:dev
 
 Set `GROQ_API_KEY` in `.env` before starting the server. The API listens on port `1198` by default, matching the frontend's local API URL. `PORT` can override it.
 
-`CLIENT_ORIGINS` is a comma-separated list of allowed browser origins. The defaults allow `http://localhost:5173` and the deployed Netlify frontend.
+`CLIENT_ORIGINS` is a comma-separated list of allowed browser origins. The defaults allow `http://localhost:5173`, the GitHub Pages site, and the Netlify frontend.
 
 ## API
 
@@ -47,7 +47,7 @@ The API validates message roles and sizes, sends at most the 20 most recent mess
 | --- | --- | --- |
 | `GROQ_API_KEY` | Secret key for Groq Chat Completions | Required |
 | `PORT` | Local/server port | `1198` |
-| `CLIENT_ORIGINS` | Comma-separated CORS allowlist | localhost and deployed frontend |
+| `CLIENT_ORIGINS` | Comma-separated CORS allowlist | localhost, GitHub Pages, and Netlify frontend |
 
 Never commit `.env` or expose `GROQ_API_KEY` in frontend code.
 
